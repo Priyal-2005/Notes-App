@@ -53,13 +53,14 @@ const App = () => {
 		);
 	}, [notes]);
 
-	const addNote = (text) => {
+	const addNote = (text, color) => {
 		const date = new Date();
 		const newNote = {
 			id: nanoid(),
 			text: text,
 			date: date.toISOString(),
 			pinned: false,
+			color: color,
 		};
 		const newNotes = [...notes, newNote];
 		setNotes(newNotes);
@@ -88,10 +89,10 @@ const App = () => {
 		setSortType(type);
 	};
 
-	// Edit note text and update date
-	const handleEditNote = (id, newText) => {
+	// Edit note text, color and update date
+	const handleEditNote = (id, newText, newColor) => {
 		const updatedNotes = notes.map(note =>
-			note.id === id ? { ...note, text: newText, date: new Date().toISOString() } : note
+			note.id === id ? { ...note, text: newText, color: newColor, date: new Date().toISOString() } : note
 		);
 		setNotes(updatedNotes);
 	};
@@ -132,6 +133,7 @@ const App = () => {
 					handleDeleteNote={deleteNote}
 					togglePinNote={togglePinNote}
 					handleEditNote={handleEditNote}
+					darkMode={darkMode}
 				/>
 			</div>
 		</div>

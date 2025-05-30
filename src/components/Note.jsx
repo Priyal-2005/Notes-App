@@ -2,11 +2,17 @@ import { useState } from 'react';
 import { MdDeleteForever, MdDownload, MdEdit } from 'react-icons/md';
 import { FaThumbtack } from 'react-icons/fa';
 
-const Note = ({ id, text, date, pinned, handleDeleteNote, togglePinNote, handleEditNote }) => {
+const COLORS = ['#fef68a', '#f9c6c9', '#f9e3c6', '#c6f9d9', '#c6d9f9', '#f9c6f2', '#c6f9f4'];
+
+const Note = ({ id, text, date, pinned, color, handleDeleteNote, togglePinNote, handleEditNote }) => {
+  const defaultColor = '#fef68a';
+  const [selectedColor, setSelectedColor] = useState(color || defaultColor);
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(text);
 
   const formattedDate = new Date(date).toLocaleDateString();
+
+  const textColor = '#000';
 
   const handleExportNote = () => {
     const element = document.createElement("a");
@@ -18,17 +24,18 @@ const Note = ({ id, text, date, pinned, handleDeleteNote, togglePinNote, handleE
   };
 
   const handleSave = () => {
-    handleEditNote(id, editText);
+    handleEditNote(id, editText, selectedColor);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     setEditText(text);
+    setSelectedColor(color);
     setIsEditing(false);
   };
 
   return (
-    <div className='note'>
+    <div className='note' style={{ backgroundColor: selectedColor, color: textColor }}>
       {isEditing ? (
         <>
           <textarea
@@ -36,6 +43,23 @@ const Note = ({ id, text, date, pinned, handleDeleteNote, togglePinNote, handleE
             onChange={(e) => setEditText(e.target.value)}
             rows="5"
           />
+          <div className='color-palette' style={{ display: 'flex', gap: '8px', margin: '8px 0' }}>
+            {COLORS.map((col) => (
+              <div
+                key={col}
+                onClick={() => setSelectedColor(col)}
+                style={{
+                  backgroundColor: col,
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  border: selectedColor === col ? '3px solid #555' : '1px solid #ccc',
+                  cursor: 'pointer',
+                }}
+                title={`Select color ${col}`}
+              />
+            ))}
+          </div>
           <div className='note-footer'>
             <button onClick={handleSave}>Save</button>
             <button onClick={handleCancel}>Cancel</button>

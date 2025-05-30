@@ -7,6 +7,7 @@ const NotesList = ({
 	handleDeleteNote,
 	togglePinNote,
 	handleEditNote,
+	darkMode,
 }) => {
 	return (
 		<div className='notes-list'>
@@ -17,9 +18,11 @@ const NotesList = ({
 					text={note.text}
 					date={note.date}
 					pinned={note.pinned}
+					color={note.color}
 					handleDeleteNote={handleDeleteNote}
 					togglePinNote={togglePinNote}
 					handleEditNote={handleEditNote}
+					darkMode={darkMode}
 				/>
 			))}
 			<AddNote handleAddNote={handleAddNote} />
