@@ -60,6 +60,26 @@ code {
 }
 
 
+.header select.sort-select {
+  margin-left: 12px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1.8px solid #ccc;
+  background-color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #333;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.05), -2px -2px 6px rgba(255,255,255,0.6);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header select.sort-select:focus {
+  outline: none;
+  border-color: #67d7cc;
+  box-shadow: 0 0 8px #67d7cc;
+}
+
+
 .dark-mode {
   background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
   color: #ddd;
@@ -97,8 +117,16 @@ code {
   color: #fff;
 }
 
-.dark-mode .notes-list {
-  /* no change */
+.dark-mode .header select.sort-select {
+  background-color: #333;
+  color: #eee;
+  border: 1.8px solid #555;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.6), -2px -2px 6px rgba(255,255,255,0.1);
+}
+
+.dark-mode .header select.sort-select:focus {
+  border-color: #67d7cc;
+  box-shadow: 0 0 8px #67d7cc;
 }
 
 .dark-mode .note {
