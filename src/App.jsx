@@ -88,6 +88,14 @@ const App = () => {
 		setSortType(type);
 	};
 
+	// Edit note text and update date
+	const handleEditNote = (id, newText) => {
+		const updatedNotes = notes.map(note =>
+			note.id === id ? { ...note, text: newText, date: new Date().toISOString() } : note
+		);
+		setNotes(updatedNotes);
+	};
+
 	const sortNotes = (notesArr) => {
 		switch (sortType) {
 			case 'newest':
@@ -123,6 +131,7 @@ const App = () => {
 					handleAddNote={addNote}
 					handleDeleteNote={deleteNote}
 					togglePinNote={togglePinNote}
+					handleEditNote={handleEditNote}
 				/>
 			</div>
 		</div>

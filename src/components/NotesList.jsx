@@ -6,6 +6,7 @@ const NotesList = ({
 	handleAddNote,
 	handleDeleteNote,
 	togglePinNote,
+	handleEditNote,
 }) => {
 	return (
 		<div className='notes-list'>
@@ -18,6 +19,7 @@ const NotesList = ({
 					pinned={note.pinned}
 					handleDeleteNote={handleDeleteNote}
 					togglePinNote={togglePinNote}
+					handleEditNote={handleEditNote}
 				/>
 			))}
 			<AddNote handleAddNote={handleAddNote} />
