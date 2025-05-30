@@ -9,19 +9,7 @@ const NotesList = ({
 }) => {
 	return (
 		<div className='notes-list'>
-			{notes.filter(note => note.pinned).map((note) => (
-				<Note
-					key={note.id}
-					id={note.id}
-					text={note.text}
-					date={note.date}
-					pinned={note.pinned}
-					handleDeleteNote={handleDeleteNote}
-					togglePinNote={togglePinNote}
-				/>
-			))}
-
-			{notes.filter(note => !note.pinned).map((note) => (
+			{notes.map((note) => (
 				<Note
 					key={note.id}
 					id={note.id}

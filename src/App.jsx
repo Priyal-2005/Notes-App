@@ -8,31 +8,32 @@ const App = () => {
 		{
 			id: nanoid(),
 			text: 'This is my first note!',
-			date: '15/04/2021',
+			date: '2021-04-15T00:00:00.000Z',
 			pinned: false,
 		},
 		{
 			id: nanoid(),
 			text: 'This is my second note!',
-			date: '21/04/2021',
+			date: '2021-04-21T00:00:00.000Z',
 			pinned: false,
 		},
 		{
 			id: nanoid(),
 			text: 'This is my third note!',
-			date: '28/04/2021',
+			date: '2021-04-28T00:00:00.000Z',
 			pinned: false,
 		},
 		{
 			id: nanoid(),
 			text: 'This is my new note!',
-			date: '30/04/2021',
+			date: '2021-04-30T00:00:00.000Z',
 			pinned: false,
 		},
 	]);
 
 	const [darkMode, setDarkMode] = useState(false);
 	const [searchText, setSearchText] = useState('');
+	const [sortType, setSortType] = useState('newest');
 	
 
 	useEffect(() => {
@@ -57,7 +58,7 @@ const App = () => {
 		const newNote = {
 			id: nanoid(),
 			text: text,
-			date: date.toLocaleDateString(),
+			date: date.toISOString(),
 			pinned: false,
 		};
 		const newNotes = [...notes, newNote];
@@ -83,17 +84,42 @@ const App = () => {
 		setNotes(newNotes);
 	};
 
+	const handleSortChange = (type) => {
+		setSortType(type);
+	};
+
+	const sortNotes = (notesArr) => {
+		switch (sortType) {
+			case 'newest':
+				return [...notesArr].sort((a, b) => new Date(b.date) - new Date(a.date));
+			case 'oldest':
+				return [...notesArr].sort((a, b) => new Date(a.date) - new Date(b.date));
+			case 'pinned':
+				return [...notesArr].sort((a, b) => b.pinned - a.pinned);
+			default:
+				return notesArr;
+		}
+	};
+
 	return (
 		<div className={`${darkMode && 'dark-mode'}`}>
 			<div className='container'>
-				<Header handleToggleDarkMode={setDarkMode} handleSearchNote={setSearchText} />
+				<Header
+					handleToggleDarkMode={setDarkMode}
+					handleSearchNote={setSearchText}
+					sortType={sortType}
+					handleSortChange={handleSortChange}
+				/>
 				<NotesList
-					notes={[...notes]
-						.filter((note) =>
-							note.text.toLowerCase().includes(searchText.toLowerCase())
-						)
-						.sort((a, b) => b.pinned - a.pinned)
-					}
+					notes={sortNotes(
+						notes
+							.filter(note =>
+								sortType === 'pinned' ? note.pinned : true
+							)
+							.filter(note =>
+								note.text.toLowerCase().includes(searchText.toLowerCase())
+							)
+					)}
 					handleAddNote={addNote}
 					handleDeleteNote={deleteNote}
 					togglePinNote={togglePinNote}
